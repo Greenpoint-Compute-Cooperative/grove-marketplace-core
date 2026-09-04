@@ -1,0 +1,5 @@
+Contact: https://github.com/Greenpoint-Compute-Cooperative/grove-marketplace-core/security/advisories/new
+Expires: 2027-08-24T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://marketplace.invalid/.well-known/security.txt
+Policy: https://github.com/Greenpoint-Compute-Cooperative/grove-marketplace-core/blob/main/SECURITY.md

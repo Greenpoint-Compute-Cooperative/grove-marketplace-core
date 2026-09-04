@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#d5e8f3">
+  <meta name="description" content="Marketplace &amp; Auction House of Brooklyn. Curator-led physical and digital art.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta property="og:title" content="Marketplace &amp; Auction House of Brooklyn">
+  <meta property="og:description" content="Curator-led physical and digital art in Brooklyn.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://marketplace.invalid/">
+  <meta property="og:image" content="https://marketplace.invalid/public/assets/school-seed.svg">
+  <meta property="og:image:alt" content="A glowing ornate school floating in pale-blue clouds">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Marketplace &amp; Auction House of Brooklyn">
+  <meta name="twitter:description" content="Curator-led physical and digital art in Brooklyn.">
+  <meta name="twitter:image" content="https://marketplace.invalid/public/assets/school-seed.svg">
+  <title>Marketplace &amp; Auction House of Brooklyn</title>
+  <link rel="canonical" href="https://marketplace.invalid/">
+  <link rel="icon" href="public/assets/school-mark.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="public/assets/school-mark.svg">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#app">Skip to content</a>
+
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="Marketplace &amp; Auction House of Brooklyn, home">
+      <img src="public/assets/school-mark.svg" alt="" width="56" height="56">
+      <span><strong>Marketplace &amp; Auction House</strong><small>of Brooklyn</small></span>
+    </a>
+
+    <nav class="main-nav" aria-label="Primary navigation">
+      <a href="#discover" data-nav="discover">Discover</a>
+      <a href="#market" data-nav="market">Marketplace</a>
+      <a href="#bazaar" data-nav="bazaar">Bazaar</a>
+    </nav>
+
+    <div class="topbar__actions">
+      <a class="join-link" href="#join">Join</a>
+      <a class="add-button" href="#sponsor"><span aria-hidden="true">+</span><span class="add-button__label">Add a piece</span></a>
+    </div>
+  </header>
+
+  <main id="app" tabindex="-1">
+    <noscript><p class="no-script">JavaScript is required to browse the marketplace.</p></noscript>
+  </main>
+
+  <footer class="footer">
+    <a class="brand brand--footer" href="#home" aria-label="Marketplace &amp; Auction House of Brooklyn, home">
+      <img src="public/assets/school-mark.svg" alt="" width="48" height="48">
+      <span><strong>Marketplace &amp; Auction House</strong><small>of Brooklyn</small></span>
+    </a>
+    <nav aria-label="Footer navigation">
+      <a href="#discover">Discover</a>
+      <a href="#market">Marketplace</a>
+      <a href="#curators">Curators</a>
+      <a href="#sponsor">Add a piece</a>
+    </nav>
+    <span>29 Nassau · Brooklyn</span>
+  </footer>
+
+  <dialog class="collect-dialog" id="collect-dialog" aria-labelledby="collect-title">
+    <div class="dialog-card">
+      <button class="dialog-close" type="button" data-close-dialog aria-label="Close">×</button>
+      <div id="collect-content"></div>
+    </div>
+  </dialog>
+
+  <dialog class="collect-dialog" id="transfer-dialog" aria-labelledby="transfer-title">
+    <div class="dialog-card">
+      <button class="dialog-close" type="button" data-close-transfer-dialog aria-label="Close">×</button>
+      <form class="transfer-form" id="transfer-form">
+        <span class="eyebrow">Self-custody exit</span>
+        <h2 id="transfer-title">Move NFT to another wallet</h2>
+        <p class="pending-note" id="transfer-summary"></p>
+        <label for="transfer-recipient">Destination Ethereum address</label>
+        <input id="transfer-recipient" name="recipient" inputmode="text" autocomplete="off" autocapitalize="off"
+          spellcheck="false" placeholder="0x…" required pattern="0x[0-9a-fA-F]{40}">
+        <p class="pending-note">Use an address you control on the displayed network. ENS names are not accepted in this release.</p>
+        <label class="transfer-confirmation">
+          <input type="checkbox" name="confirmed" required>
+          <span>I checked the network and address. This onchain transfer cannot be reversed by The School.</span>
+        </label>
+        <button class="button button--dark" type="submit" data-submit-nft-transfer>Review and sign with passkey</button>
+        <p class="pending-note" role="status" aria-live="polite" data-transfer-status></p>
+      </form>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

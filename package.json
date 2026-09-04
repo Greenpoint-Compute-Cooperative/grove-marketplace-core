@@ -1,0 +1,41 @@
+{
+  "name": "brooklyn-marketplace-auction-house",
+  "version": "1.2.0",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/build-static.mjs && node scripts/serve-static.mjs",
+    "build": "npm run check && npm test && node scripts/build-static.mjs",
+    "check": "find api lib scripts tests -type f \\( -name '*.js' -o -name '*.mjs' \\) -print0 | xargs -0 -n1 node --check && node --check app.js && node --check analytics.js && node --check catalog.js",
+    "ci": "npm run build && npm run contracts:test && npm run repo:check",
+    "config:check": "node scripts/check-config.mjs",
+    "stripe:setup": "node scripts/stripe-setup.mjs",
+    "launch:check": "node scripts/check-launch.mjs",
+    "repo:check": "node scripts/check-repo.mjs",
+    "seed:preview": "node scripts/seed-preview.mjs",
+    "seed:sepolia-auction": "node scripts/seed-sepolia-auction.mjs",
+    "wallet:deploy:staging": "node scripts/deploy-prepared-safe.mjs",
+    "test": "node tests/smoke.mjs && node tests/backend.mjs && node tests/delivery.mjs && node tests/resale.mjs && node tests/resale-seller-actions.mjs && node tests/resale-indexer.mjs && node tests/sponsored-userop.mjs && node tests/owner-exit.mjs && node tests/marketplace-qol.mjs && node tests/synthetic-social-auth.mjs && node tests/wallet-provisioning.mjs && node tests/passkey-provisioning-ui.mjs && node tests/stripe-launch.mjs && node tests/public-export.mjs",
+    "contracts:build": "forge build --root contracts",
+    "contracts:test": "forge test --root contracts"
+  },
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "dependencies": {
+    "@opensea/seaport-js": "4.3.0",
+    "@supabase/ssr": "^0.12.4",
+    "@supabase/supabase-js": "^2.112.3",
+    "cookie": "^2.0.1",
+    "ox": "0.11.3",
+    "permissionless": "0.4.0",
+    "stripe": "22.6.1",
+    "viem": "2.56.3"
+  },
+  "devDependencies": {
+    "@openzeppelin/contracts": "5.6.1",
+    "esbuild": "0.28.2"
+  },
+  "description": "Open-source marketplace reference; no operator configuration or production authorization included."
+}

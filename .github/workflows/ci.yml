@@ -1,0 +1,77 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          submodules: recursive
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .node-version
+          cache: npm
+      - name: Install checksum-pinned official Foundry
+        shell: bash
+        run: |
+          set -euo pipefail
+          foundry_dir="$(mktemp -d)"
+          curl --fail --silent --show-error --location --proto '=https' --tlsv1.2 \
+            https://github.com/foundry-rs/foundry/releases/download/v1.3.2/foundry_v1.3.2_linux_amd64.tar.gz \
+            --output "$foundry_dir/foundry.tar.gz"
+          printf '%s  %s\n' 'a4c9af730595767a1c6f4f27d6e014bb720d3c4e73574abac5a9754ae4ca18d3' "$foundry_dir/foundry.tar.gz" | sha256sum --check --status
+          tar -xzf "$foundry_dir/foundry.tar.gz" -C "$foundry_dir" forge cast anvil
+          echo "$foundry_dir" >> "$GITHUB_PATH"
+      - run: npm ci
+      - run: npm run ci
+        env:
+          FOUNDRY_PROFILE: ci
+      - name: Audit production dependencies
+        run: |
+          for attempt in 1 2 3; do
+            if npm audit --omit=dev --audit-level=high; then
+              exit 0
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              exit 1
+            fi
+            sleep $((attempt * 10))
+          done
+
+  commerce-sql:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:16.14-alpine
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: grove_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d grove_ci"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/grove_ci
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - run: ./scripts/test-commerce-sql.sh

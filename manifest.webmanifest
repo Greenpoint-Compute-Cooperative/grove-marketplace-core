@@ -1,0 +1,17 @@
+{
+  "name": "Marketplace & Auction House of Brooklyn",
+  "short_name": "Marketplace & Auction House of Brooklyn",
+  "description": "Curator-led physical and digital art in Brooklyn.",
+  "start_url": "/#home",
+  "display": "standalone",
+  "background_color": "#f4f9fc",
+  "theme_color": "#d5e8f3",
+  "icons": [
+    {
+      "src": "/public/assets/school-mark.svg",
+      "sizes": "620x620",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

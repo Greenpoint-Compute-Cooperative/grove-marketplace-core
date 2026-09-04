@@ -1,0 +1,20 @@
+# Deployment bundles must never include local secrets, wallets, or operator files.
+.git/
+.env
+.env.*
+!.env.example
+.sepolia/
+.codex/
+node_modules/
+contracts/broadcast/
+contracts/cache/
+contracts/out/
+supabase/.temp/
+*.keystore
+*.pem
+*.key
+*.p12
+*.pfx
+*.dump
+*.sql.gz
+*-audit-report.json

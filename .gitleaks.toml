@@ -1,0 +1,26 @@
+title = "Marketplace public-source secret scan"
+
+[extend]
+useDefault = true
+
+# Generated content checksums can resemble API keys when a filename contains
+# words such as "secret". Only this rule, this root file, and a complete SHA-256
+# value are exempt; other token types in the manifest are still scanned.
+[[rules]]
+id = "generic-api-key"
+  [[rules.allowlists]]
+  description = "Generated public file SHA-256 values"
+  condition = "AND"
+  paths = ['''^PUBLIC_FILES\.sha256\.json$''']
+  regexTarget = "secret"
+  regexes = ['''^[a-f0-9]{64}$''']
+
+# One audited literal fixture, not all test files or all Stripe test tokens.
+[[rules]]
+id = "stripe-access-token"
+  [[rules.allowlists]]
+  description = "Exact backend Stripe placeholder fixture"
+  condition = "AND"
+  paths = ['''^tests/backend\.mjs$''']
+  regexTarget = "secret"
+  regexes = ['''^sk_test_placeholder$''']
