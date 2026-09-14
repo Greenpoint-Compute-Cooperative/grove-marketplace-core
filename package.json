@@ -30,7 +30,7 @@
     "cookie": "^2.0.1",
     "ox": "0.11.3",
     "permissionless": "0.4.0",
-    "stripe": "22.6.1",
+    "stripe": "22.6.2",
     "viem": "2.56.3"
   },
   "devDependencies": {
